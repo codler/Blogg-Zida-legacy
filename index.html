@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>
+			Iyap.se
+		</title>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yuiloader/yuiloader-min.js" ></script> 
+		
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/skin.css">
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/colorpicker/assets/skins/sam/colorpicker.css">
+
+		<!-- js -->
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/slider/slider-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/colorpicker/colorpicker-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/cookie/cookie-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container_core-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/menu/menu-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/editor/editor-min.js"></script>
+
+		<script type="text/javascript">
+//<![CDATA[
+
+/* (CC) 2009 Han Lin Yap. Some Rights Reserved.             	  */
+/*   http://creativecommons.org/licenses/by/3.0                   */
+/* This style sheet is licensed under a Creative Commons License. */
+/*
+	Author: Han Lin Yap
+	Date: 2009-04-05
+*/
+		jQuery.noConflict();
+		jQuery(document).ready(function(){
+			var boxPref = new Array();
+			boxPref[0] = new Array();				// bigbox
+			boxPref[0][0] = new Array();			// middlebox
+			boxPref[0][0][0] = new Array();			// 
+			//boxPref[0][0][0] = "littlebox1" 		// littlebox 1
+			boxPref[0][0][0][0] = new boxPreferens(1000); 	// box-left-top
+			boxPref[0][0][1] = new Array();			// littlebox 2
+			boxPref[0][0][1][0] = new boxPreferens(2000) 	// box-right-top
+			boxPref[0][0][1][1] = new boxPreferens(3000) // box-right-bottom
+			
+			function boxPreferens(id) {
+			
+				// to do 
+				// request ajax by id
+				
+				this.id = id;
+				this.textDisplay = "this is [box "+id;
+				this.boxType = "css";
+				this.widthSet = false;
+				this.width = 100;
+				this.alias;
+			}
+			
+			init();
+			function init() {
+				var l1=boxPref.length;
+				var l2,l3,l4;
+				for (var i = 0; i < l1; i++) {
+					l2 = boxPref[i].length;
+					for (var j = 0; j < l2; j++) {
+						l3 = boxPref[i][j].length;
+						for (var k = 0; k < l3; k++) {
+							l4 = boxPref[i][j][k].length;
+							for (var l = 0; l < l4; l++) {
+								jQuery(".bigbox:eq("+i+") .middlebox:eq("+j+") .littlebox:eq("+k+") .box:eq("+l+")").html(boxPref[i][j][k][l].textDisplay);
+								//console.log(".bigbox:eq("+i+") .middlebox:eq("+j+") .littlebox:eq("+k+") .box:eq("+l+")");
+								//console.log(boxPref[i][j][k][l]);
+								///console.log(jQuery.param(boxPref[i][j][k][l]));
+								///console.log(jQuery(jQuery.makeArray(boxPref[i][j][k][l])));
+							}
+						}
+					}
+				}
+			}
+			
+			save();
+			
+			jQuery("#design-toolbar-button-save").click(function () {
+				save();
+			});
+			
+			function save() {
+				var str = "";
+				var l1=boxPref.length;
+				var l2,l3,l4;
+				for (var i = 0; i < l1; i++) {
+					l2 = boxPref[i].length;
+					for (var j = 0; j < l2; j++) {
+						l3 = boxPref[i][j].length;
+						for (var k = 0; k < l3; k++) {
+							l4 = boxPref[i][j][k].length;
+							for (var l = 0; l < l4; l++) {
+								str += "<item><map>"+i+"|"+j+"|"+k+"|"+l+"</map>";
+								str += "<value>"+jQuery.param(boxPref[i][j][k][l])+"</value></item>\r\n";
+								
+							}
+						}
+					}
+				}				
+				///console.log(str);
+				// Example: 
+				//<item><map>0|0|0|0</map><value>id=1&textDisplay=this+is+%5Bbox+1&boxType=css&widthSet=false&width=100</value></item>
+				//<item><map>0|0|1|0</map><value>id=2&textDisplay=this+is+%5Bbox+2&boxType=css&widthSet=false&width=100</value></item>
+				//<item><map>0|0|1|1</map><value>id=3&textDisplay=this+is+%5Bbox+3&boxType=css&widthSet=false&width=100</value></item>
+				
+				// PHP will use parse_str() function to get Querystring.
+			}
+			
+			// Init setting value
+			if (YAHOO.util.Cookie.getSub("settings", "SiteWidth") !== null) {
+				jQuery("#design-toolbar-toolbox-site-width").val(YAHOO.util.Cookie.getSub("settings", "SiteWidth"));
+				jQuery("#container").width(parseInt(YAHOO.util.Cookie.getSub("settings", "SiteWidth")));
+			}
+			if (YAHOO.util.Cookie.getSub("toolbar", "top") !== null) {
+				jQuery("#design-toolbar").css({ top: parseInt(YAHOO.util.Cookie.getSub("toolbar", "top")),
+												left: parseInt(YAHOO.util.Cookie.getSub("toolbar", "left"))
+											});
+			}
+			jQuery("#design-toolbar").css({ position: 'absolute'});
+			// Set drag event on toolbar
+			jQuery("#design-toolbar").draggable({ 	handle: '#design-toolbar-handler',
+													containment: 'document',
+													zIndex: 1000,
+													drag: function(ev, ui) {
+													YAHOO.util.Cookie.setSub("toolbar", "top",ui.offset.top);
+													YAHOO.util.Cookie.setSub("toolbar", "left",ui.offset.left);
+													}
+												});
+			
+			jQuery("#design-toolbar-toolset-css").draggable({ helper: 'clone',
+													start: function(ev, ui) {
+														jQuery(".temp-accept-droppable").css({ display: "block"});
+														reBindHeight();
+													},
+													stop: function(ev, ui) {
+														jQuery(".temp-accept-droppable").css({ display: "none"});
+													}
+											});
+			
+			var droppableConfig = { 	accept: '.design-toolbar-toolset' ,
+											activeClass: 'ui-state-active',
+											hoverClass: 'ui-state-hover',
+											drop: function(ev, ui) {
+												// Get Toolname
+				var tool = ui.draggable.attr("id").replace(/design-toolbar-toolset-/,"");
+										
+												jQuery(this).trigger('click',[ tool ]);
+										//ui.draggable;
+											}
+										};
+			
+			jQuery(".temp-accept-droppable").droppable(droppableConfig);
+			
+			// Events in toolbar											
+			jQuery("#design-toolbar-toolbox-site-width").blur(function () {
+											var w = parseInt(jQuery(this).val());
+											jQuery("#container").width(w);
+											YAHOO.util.Cookie.setSub("settings", "SiteWidth",w);
+										});
+										
+			jQuery("#design-toolbar-toolbox-site-align-left").click(function () {
+											jQuery("#container").css({ margin: '0', float: 'none'});
+										});
+			jQuery("#design-toolbar-toolbox-site-align-center").click(function () {
+											jQuery("#container").css({ margin: '0 auto', float: 'none'});
+										});
+			jQuery("#design-toolbar-toolbox-site-align-right").click(function () {
+											jQuery("#container").css({ float: 'right'});
+										});
+			
+			innerReBind();
+			
+			function innerTop(ev,data){ jQuery(this).after(innerBox(data)
+									+ '<div id="" class="temp-inner-vert-middle temp-accept-droppable">inner-vert-middle</div>' ); 
+									
+									///console.log(jQuery(".bigbox").index(jQuery(this).parent().parent().parent()));
+									boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent().parent())][jQuery(".middlebox").index(jQuery(this).parent().parent())][jQuery(".littlebox").index(jQuery(this).parent())].unshift(new boxPreferens(0001));
+									innerReBind();
+								}
+			function innerBottom(ev,data){ jQuery(this).before('<div id="" class="temp-inner-vert-middle temp-accept-droppable">inner-vert-middle</div>'
+									+ innerBox(data));
+									boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent().parent())][jQuery(".middlebox").index(jQuery(this).parent().parent())][jQuery(".littlebox").index(jQuery(this).parent())].push(new boxPreferens(0003));
+									
+									innerReBind();
+								}
+			function innerLeft(ev,data){ jQuery(this).after(innerContent(data)
+									+ '<div id="" class="temp-inner-middle temp-accept-droppable">inner-middle</div>');
+									
+									boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent())][jQuery(".middlebox").index(jQuery(this).parent())].unshift(new Array);
+									boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent())][jQuery(".middlebox").index(jQuery(this).parent())][0][0] = new boxPreferens(10);
+									
+									innerReBind();
+								}
+			function innerRight(ev,data){ jQuery(this).before('<div id="" class="temp-inner-middle temp-accept-droppable">inner-middle</div>'
+									+ innerContent(data));
+									
+									var l = boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent())][jQuery(".middlebox").index(jQuery(this).parent())].push(new Array); // returns array length
+									boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent())][jQuery(".middlebox").index(jQuery(this).parent())][l-1][0] = new boxPreferens(30);
+									
+									
+									innerReBind();
+								}
+			function innerMiddle(ev,data){ jQuery(this).after(innerContent(data)
+									+ '<div id="" class="temp-inner-middle temp-accept-droppable">inner-middle</div>');
+									
+									var arr = boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent())][jQuery(".middlebox").index(jQuery(this).parent())];
+									///console.log(arr);
+									var index = jQuery(".bigbox:eq("+jQuery(".bigbox").index(jQuery(this).parent().parent())+") .middlebox:eq("+jQuery(".middlebox").index(jQuery(this).parent())+") .littlebox").index(jQuery(this).next(".littlebox"));
+									///console.log(index);
+									var newarr = arr.slice(0,index);
+									var l = newarr.push(new Array); // return arrays lengths 
+									newarr[l-1][0] = new boxPreferens(20);
+									
+									///console.log(newarr);
+									///console.log(arr.slice(index));
+									///console.log(newarr.concat(arr.slice(index)));
+									boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent())][jQuery(".middlebox").index(jQuery(this).parent())] = newarr.concat(arr.slice(index));
+									
+									innerReBind();
+								}
+			function innerVertMiddle(ev,data){ jQuery(this).after(innerBox(data)
+									+ '<div id="" class="temp-inner-vert-middle temp-accept-droppable">inner-vert-middle</div>');
+									
+									var arr = boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent().parent())][jQuery(".middlebox").index(jQuery(this).parent().parent())][jQuery(".littlebox").index(jQuery(this).parent())];
+									///console.log(arr);
+									var index = jQuery(".bigbox:eq("+jQuery(".bigbox").index(jQuery(this).parent().parent().parent())+") .middlebox:eq("+jQuery(".middlebox").index(jQuery(this).parent().parent())+") .littlebox:eq("+jQuery(".littlebox").index(jQuery(this).parent())+")"+" .box").index(jQuery(this).next(".box"));
+									///console.log(index);
+									var newarr = arr.slice(0,index);
+									newarr.push(new boxPreferens(0002));
+									///console.log(newarr);
+									///console.log(arr.slice(index));
+									///console.log(newarr.concat(arr.slice(index)));
+									boxPref[jQuery(".bigbox").index(jQuery(this).parent().parent().parent())][jQuery(".middlebox").index(jQuery(this).parent().parent())][jQuery(".littlebox").index(jQuery(this).parent())] = newarr.concat(arr.slice(index));
+									
+									innerReBind();
+								}
+			function innerContent(c){ return '<div class="littlebox">'
+									+ '<div id="" class="temp-inner-top temp-accept-droppable">inner-top</div>'
+									+ innerBox(c)
+									+ '<div id="" class="temp-inner-bottom temp-accept-droppable">inner-bottom</div>'
+									+ '</div>'; 
+								}
+			function innerBox(c){ return '<div class="box"><span class="temp-data">'+c+'</span>'+c+'</div>'; }
+			function outerTop(ev,data){ jQuery(this).after('<div class="middlebox">'
+												+ '<div id="" class="temp-inner-left temp-accept-droppable">inner-left</div>'
+												+ innerContent(data)												
+												+ '<div id="" class="temp-inner-right temp-accept-droppable">inner-right</div>'
+									+ '</div>'
+									+ '<div id="" class="temp-outer-vert-middle temp-accept-droppable">outer-vert-middle</div>' ); 
+								
+									innerReBind();
+								}
+			function outerBottom(ev,data){ jQuery(this).before('<div id="" class="temp-outer-vert-middle temp-accept-droppable">outer-vert-middle</div>'
+									+ '<div class="middlebox">'
+									+ '<div id="" class="temp-inner-left temp-accept-droppable">inner-left</div>'
+												+ innerContent(data)												
+												+ '<div id="" class="temp-inner-right temp-accept-droppable">inner-right</div>'
+												+ '</div>');
+									
+									innerReBind();
+								}
+			function outerMiddle(ev,data){ jQuery(this).after('<div class="bigbox">'
+									+ '<div id="" class="temp-outer-top temp-accept-droppable">outer-top</div>'
+									+ '<div class="middlebox">'
+									+ '<div id="" class="temp-inner-left temp-accept-droppable">inner-left</div>'
+									+ innerContent(data)
+									+ '<div id="" class="temp-inner-right temp-accept-droppable">inner-right</div>'
+									+ '</div>'
+									+ '<div id="" class="temp-outer-bottom temp-accept-droppable">outer-bottom</div>'
+									+ '</div>'
+									+ '<div id="" class="temp-outer-middle temp-accept-droppable">outer-middle</div>');
+									
+									innerReBind();
+								}
+			function outerVertMiddle(ev,data){ jQuery(this).after('<div class="middlebox">'
+												+ '<div id="" class="temp-inner-left temp-accept-droppable">inner-left</div>'
+												+ innerContent(data)												
+												+ '<div id="" class="temp-inner-right temp-accept-droppable">inner-right</div>'
+									+ '</div>'
+									+ '<div id="" class="temp-outer-vert-middle temp-accept-droppable">outer-vert-middle</div>' ); 
+									
+									
+									innerReBind();
+								}
+			function boxClick() {
+				switch (jQuery(this).find(".temp-data").text())
+				{
+					case 'css': jQuery("#design-toolbar-toolprop").html(
+								'<input type="text" name="color" id="design-toolbar-toolprop-color" value="#fff" />'
+								+ '<div id="design-toolbar-toolprop-colorpick" style="position:relative;"></div>'
+								)
+								
+								jQuery("#design-toolbar-toolprop-color").click(function () {								
+									var picker = new YAHOO.widget.ColorPicker("design-toolbar-toolprop-colorpick", {
+												showhsvcontrols: false,
+												showhexcontrols: false,
+												showrgbcontrols: false,
+												showhexsummary: false,
+												showwebsafe: false
+
+									});
+									picker.on("rgbChange", function (o) {jQuery("#design-toolbar-toolprop-color").val(o.newValue)}); 
+								});
+								
+								break;
+				}
+				//jQuery("#design-toolbar-toolprop").html(jQuery(this).html());
+			}
+			function innerReBind(){ jQuery(".temp-inner-top").bind('click',innerTop);
+									jQuery(".temp-inner-bottom").bind('click',innerBottom);
+									jQuery(".temp-inner-left").bind('click',innerLeft);
+									jQuery(".temp-inner-right").bind('click',innerRight);
+									jQuery(".temp-inner-middle").bind('click',innerMiddle);
+									jQuery(".temp-inner-vert-middle").bind('click',innerVertMiddle);
+									
+									jQuery(".temp-outer-top").bind('click',outerTop);
+									jQuery(".temp-outer-bottom").bind('click',outerBottom);
+									jQuery(".temp-outer-middle").bind('click',outerMiddle);
+									jQuery(".temp-outer-vert-middle").bind('click',outerVertMiddle);
+									
+									jQuery(".box").bind('click',boxClick);
+									// drag
+									jQuery(".temp-accept-droppable").droppable(droppableConfig);
+									
+									//reBindHeight();
+								}
+			function reBindHeight() {
+				// height
+				// inner
+				/*
+				jQuery(".temp-inner-left, .temp-inner-right, .temp-inner-middle").each(function (i) {
+					console.log(jQuery(this).parent().parent().find(".middlebox").length);
+					jQuery(this).height(0);
+					jQuery(this).height((jQuery(this).parent().parent().height()-40*2)/jQuery(this).parent().parent().find(".middlebox").length);
+				});*/
+				jQuery(".temp-inner-left, .temp-inner-right, .temp-inner-middle").height(0);
+				jQuery(".littlebox").each(function(i) {
+					if (jQuery(this).height()-jQuery(this).find(".box").length*20>jQuery(this).parent().find(".temp-inner-left, .temp-inner-right, .temp-inner-middle").height()) {
+						jQuery(this).parent().find(".temp-inner-left, .temp-inner-right, .temp-inner-middle").height(jQuery(this).height()-jQuery(this).find(".box").length*20);
+					}
+				});
+				
+				// outer
+				jQuery(".temp-outer-left, .temp-outer-right, .temp-outer-middle").height(0);
+				jQuery(".bigbox").each(function(i) {
+					if (jQuery(this).height()>jQuery(".temp-outer-left, .temp-outer-right, .temp-outer-middle").height()) {
+						jQuery(".temp-outer-left, .temp-outer-right, .temp-outer-middle").height(jQuery(this).height());
+					}
+				});
+			}
+			
+			jQuery(".temp-outer-left").click(function (ev,data){
+												jQuery(this).after('<div class="bigbox">'
+												+ '<div id="" class="temp-outer-top temp-accept-droppable">outer-top</div>'
+												+ '<div class="middlebox">'
+												+ '<div id="" class="temp-inner-left temp-accept-droppable">inner-left</div>'
+												+ innerContent(data)
+												+ '<div id="" class="temp-inner-right temp-accept-droppable">inner-right</div>'
+												+ '</div>'
+												+ '<div id="" class="temp-outer-bottom temp-accept-droppable">outer-bottom</div>'
+												+ '</div>'
+												+ '<div id="" class="temp-outer-middle temp-accept-droppable">outer-middle</div>');
+													
+												innerReBind();
+								});					
+			jQuery(".temp-outer-right").click(function (ev,data){
+												jQuery(this).before('<div id="" class="temp-outer-middle temp-accept-droppable">outer-middle</div>'
+												+ '<div class="bigbox">'
+												+ '<div id="" class="temp-outer-top temp-accept-droppable">outer-top</div>'
+												+ '<div class="middlebox">'
+												+ '<div id="" class="temp-inner-left temp-accept-droppable">inner-left</div>'
+												+ innerContent(data)												
+												+ '<div id="" class="temp-inner-right temp-accept-droppable">inner-right</div>'
+												+ '</div>'
+												+ '<div id="" class="temp-outer-bottom temp-accept-droppable">outer-bottom</div>'
+												+ '</div>');
+													
+												innerReBind();
+								});							
+			 
+					
+			
+			
+		});
+		
+
+
+		
+//]]>
+</script>
+		<link rel="stylesheet" type="text/css" href="interface.css" />
+	</head>
+<body class="yui-skin-sam">
+<div id="dialog"></div>
+	<!-- Start Design Toolbar -->
+	<div id="design-toolbar">
+		<div id="design-toolbar-handler">handle</div>
+		<div id="design-toolbar-toolset">The toolbar<br />
+			<img id="design-toolbar-toolset-css" class="design-toolbar-toolset" src="cssimage.jpg" />
+		</div>
+		<div id="design-toolbar-toolbox">The toolbox<br />
+			<label for="design-toolbar-toolbox-site-width">Site Width</label>
+			<input type="text" name="design-toolbar-toolbox-site-width" id="design-toolbar-toolbox-site-width" value="700" />
+			<br />
+			<label for="design-toolbar-toolbox-site-align-left">Left</label>
+			<input type="radio" name="design-toolbar-toolbox-site-align" id="design-toolbar-toolbox-site-align-left" value="left" />
+			<label for="design-toolbar-toolbox-site-align-center">Center</label>
+			<input type="radio" name="design-toolbar-toolbox-site-align" id="design-toolbar-toolbox-site-align-center" value="center" />
+			<label for="design-toolbar-toolbox-site-align-right">Right</label>
+			<input type="radio" name="design-toolbar-toolbox-site-align" id="design-toolbar-toolbox-site-align-right" value="right" />
+			
+			<input type="button" id="design-toolbar-button-save" value="Save" />
+		</div>
+		<h6>Properties</h6>
+		<div id="design-toolbar-toolprop"> </div>
+	</div>
+	<!-- End Design Toolbar -->
+	<div id="container" style="width:800px;">
+		<div id="" class="temp-outer-left temp-accept-droppable">outer-left</div>
+		<div class="bigbox">
+			<div id="" class="temp-outer-top temp-accept-droppable">outer-top</div>
+			<div class="middlebox">
+				<div id="" class="temp-inner-left temp-accept-droppable">inner-left</div>
+				<div class="littlebox">
+					
+					
+					<div id="" class="temp-inner-top temp-accept-droppable">inner-top</div>
+					<div class="box">
+						Innehåll-vänster
+					</div>
+					<div id="" class="temp-inner-bottom temp-accept-droppable">inner-bottom</div>
+				</div>
+				<div id="" class="temp-inner-middle temp-accept-droppable">inner-middle</div>
+				<div class="littlebox">
+					<div id="" class="temp-inner-top temp-accept-droppable">inner-top</div>
+					<div class="box">
+						Innehåll-höger
+					</div>
+					<div id="" class="temp-inner-vert-middle temp-accept-droppable">inner-vert-middle</div>
+					<div class="box">
+						Innehåll-höger
+					</div>
+					<div id="" class="temp-inner-bottom temp-accept-droppable">inner-bottom</div>
+					
+				</div>
+				<div id="" class="temp-inner-right temp-accept-droppable">inner-right</div>
+			</div>
+			<div id="" class="temp-outer-bottom temp-accept-droppable">outer-bottom</div>
+		</div>
+		<div id="" class="temp-outer-right temp-accept-droppable">outer-right</div>
+	</div>
+</body>
+</html>

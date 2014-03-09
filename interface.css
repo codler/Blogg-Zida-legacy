@@ -1,0 +1,124 @@
+/* (CC) 2008 Han Lin Yap. Some Rights Reserved.             	  */
+/*   http://creativecommons.org/licenses/by/3.0                   */
+/* This style sheet is licensed under a Creative Commons License. */
+/*
+	Author: Han Lin Yap
+	Date: 2009-04-05
+*/
+/* == Reset == */
+/* YUI reset version: 2.7.0 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}
+del,ins{text-decoration:none;}
+li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym{border:0;font-variant:normal;}
+sup{vertical-align:baseline;}
+sub{vertical-align:baseline;}
+legend{color:#000;}
+input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}
+
+/* == TAGS == */
+
+html{overflow: -moz-scrollbars-vertical;overflow: scroll;} /* Design fix: Center */
+
+body {
+	background: #fff;
+	position: relative;
+}
+/* == ID == */
+#header {
+	min-height: 100px;
+}
+
+/* == CLASSES == */
+.ui-state-active {
+	background: #FFFF66;
+	display: block;
+	border: 1px dotted #230;
+}
+.ui-state-hover {
+	background: #ff0;
+	border: 1px dotted #000;
+}
+
+/* ==  Design Toolbar == */
+#design-toolbar {
+	background: #570;
+	width: 220px;
+	position: absolute;
+} 
+#design-toolbar-handler {
+	background: #dfd;
+} 
+#design-toolbar-toolset {
+
+} 
+
+
+/* ==  Addbox == */
+/* div {border: 1px solid #0ff; }*/
+.box {
+	width: 100px;
+	height: 100px;
+	background: #f0f;
+}
+.littlebox {
+	float:left;
+}
+.middlebox {
+	clear:both;
+}
+.bigbox {
+	float:left;
+}
+
+.temp-accept-droppable {
+	display: none; 
+	margin:5px;
+}
+.temp-inner-left, .temp-inner-right, .temp-outer-left, .temp-outer-right, 
+.temp-inner-middle, .temp-outer-middle {
+	width: 25px;
+}
+.temp-outer-left, .temp-outer-right, .temp-outer-middle {
+	width: 10px;
+}
+.temp-outer-top, .temp-outer-bottom {
+	height: 10px;
+}
+.temp-inner-top {
+}
+.temp-inner-bottom {
+}
+.temp-inner-left {
+	float: left;
+}
+.temp-inner-middle {
+	float: left;
+}
+.temp-inner-right {
+	float:left;
+}
+.temp-outer-top {
+	clear:both;
+}
+.temp-outer-bottom {
+	clear:both;
+}
+.temp-outer-left {
+	float: left;
+}
+.temp-outer-middle {
+	float: left;
+}
+.temp-outer-vert-middle {
+	clear: both;
+}
+.temp-outer-right {
+	float:left;
+}
